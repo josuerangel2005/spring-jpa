@@ -80,4 +80,19 @@ public class PizzaController {
   public ResponseEntity<List<PizzaEntity>> getWithout(@PathVariable String ingredient) {
     return new ResponseEntity<List<PizzaEntity>>(this.pizzaService.getWithout(ingredient), HttpStatus.OK);
   }
+
+  @GetMapping("/less/{price}")
+  public ResponseEntity<List<PizzaEntity>> getLessThan(@PathVariable double price) {
+    return new ResponseEntity<List<PizzaEntity>>(this.pizzaService.lessThan(price), HttpStatus.OK);
+  }
+
+  @GetMapping("/greater/{price}")
+  public ResponseEntity<List<PizzaEntity>> getGreater(@PathVariable double price) {
+    return new ResponseEntity<List<PizzaEntity>>(this.pizzaService.greaterThan(price), HttpStatus.OK);
+  }
+
+  @GetMapping("/pref/{prefix}")
+  public ResponseEntity<List<PizzaEntity>> getPrefix(@PathVariable String prefix) {
+    return new ResponseEntity<List<PizzaEntity>>(this.pizzaService.findPref(prefix), HttpStatus.OK);
+  }
 }

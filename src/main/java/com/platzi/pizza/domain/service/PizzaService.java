@@ -60,4 +60,16 @@ public class PizzaService {
   public List<PizzaEntity> getWithout(String ingredient) {
     return this.pizzaRepository.findAllByAvailableTrueAndDescriptionNotContainingIgnoreCase(ingredient);
   }
+
+  public List<PizzaEntity> lessThan(double price) {
+    return this.pizzaRepository.findByPriceLessThan(price);
+  }
+
+  public List<PizzaEntity> greaterThan(double price) {
+    return this.pizzaRepository.findByPriceGreaterThan(price);
+  }
+
+  public List<PizzaEntity> findPref(String prefix) {
+    return this.pizzaRepository.findAllByNameStartingWith(prefix);
+  }
 }

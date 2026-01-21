@@ -15,6 +15,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
+import jakarta.persistence.OrderBy;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -47,6 +48,7 @@ public class OrderEntity {
   private String additionalNotes;
 
   @OneToMany(mappedBy = "order", fetch = FetchType.EAGER)
+  @OrderBy("price")
   private Set<OrderItemEntity> items = new HashSet<>();
 
   @OneToOne(fetch = FetchType.LAZY)

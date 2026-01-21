@@ -2,6 +2,7 @@ package com.platzi.pizza.web.controller;
 
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.platzi.pizza.domain.service.PizzaService;
@@ -94,5 +96,30 @@ public class PizzaController {
   @GetMapping("/pref/{prefix}")
   public ResponseEntity<List<PizzaEntity>> getPrefix(@PathVariable String prefix) {
     return new ResponseEntity<List<PizzaEntity>>(this.pizzaService.findPref(prefix), HttpStatus.OK);
+  }
+
+  @GetMapping("/cheapest/{price}")
+  public ResponseEntity<List<PizzaEntity>> getCheapest(@PathVariable double price) {
+    return new ResponseEntity<List<PizzaEntity>>(this.pizzaService.getCheapest(price), HttpStatus.OK);
+  }
+
+  @GetMapping("/p")
+  public ResponseEntity<Page<PizzaEntity>> getAll(@RequestParam(defaultValue = "0") int page,
+      @RequestParam(defaultValue = "8") int elements) {
+    return new ResponseEntity<Page<PizzaEntity>>(this.pizzaService.getAll(page, elements), HttpStatus.OK);
+  }
+
+  @GetMapping("/pv")
+  public ResponseEntity<Page<PizzaEntity>> getAvailable(@RequestParam(defaultValue = "0") int page,
+      @RequestParam(defaultValue = "8") int elements, @RequestParam(defaultValue = "price") String sortBy) {
+    return new ResponseEntity<Page<PizzaEntity>>(this.pizzaService.getAvailabe(page, elements, sortBy), HttpStatus.OK);
+  }
+
+  @GetMapping("/pv")
+  public ResponseEntity<Page<PizzaEntity>> getAvailable(@RequestParam(defaultValue = "0") int page,
+      @RequestParam(defaultValue = "8") int elements, @RequestParam(defaultValue = "price") String sortBy,
+      @RequestParam(defaultValue = "ASC") String direction) {
+    return new ResponseEntity<Page<PizzaEntity>>(this.pizzaService.getAvailable(page, elements, sortBy, direction),
+        HttpStatus.OK);
   }
 }

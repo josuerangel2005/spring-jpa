@@ -115,7 +115,7 @@ public class PizzaController {
     return new ResponseEntity<Page<PizzaEntity>>(this.pizzaService.getAvailabe(page, elements, sortBy), HttpStatus.OK);
   }
 
-  @GetMapping("/pv")
+  @GetMapping("/pvd")
   public ResponseEntity<Page<PizzaEntity>> getAvailable(@RequestParam(defaultValue = "0") int page,
       @RequestParam(defaultValue = "8") int elements, @RequestParam(defaultValue = "price") String sortBy,
       @RequestParam(defaultValue = "ASC") String direction) {

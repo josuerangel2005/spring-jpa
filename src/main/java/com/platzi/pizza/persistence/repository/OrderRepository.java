@@ -21,15 +21,15 @@ public interface OrderRepository extends ListCrudRepository<OrderEntity, Integer
   @Query(value = """
       SELECT po.id_order AS idOrder,
              c.name AS customerName,
-             po.order_date AS orderDate,
+             po.date AS orderDate,
              po.total AS orderTotal,
              GROUP_CONCAT(p.name) AS pizzaNames
-      FROM pixa_order po
+      FROM pizza_order po
       JOIN customer c ON po.id_customer = c.id_customer
       JOIN order_item oi ON po.id_order = oi.id_order
-      JOIN pixa p ON oi.id_pixa = p.id_pixa
+      JOIN pizza p ON oi.id_pizza = p.id_pizza
       WHERE po.id_order = :orderId
-      GROUP BY po.id_order, c.name, po.order_date, po.total;
+      GROUP BY po.id_order, c.name, po.date, po.total;
             """, nativeQuery = true)
   OrderSummary findSummary(@Param("orderId") int orderId);
 

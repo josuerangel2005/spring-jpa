@@ -1,5 +1,7 @@
 package com.platzi.pizza.domain.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,5 +16,9 @@ public class CustomerService {
 
   public CustomerEntity findByPhone(String phone) {
     return this.customerRepository.findByPhone(phone);
+  }
+
+  public List<CustomerEntity> findByText(String text) {
+    return this.customerRepository.findByText("%" + text + "%");
   }
 }

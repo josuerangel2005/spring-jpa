@@ -33,4 +33,26 @@ public interface OrderRepository extends ListCrudRepository<OrderEntity, Integer
             """, nativeQuery = true)
   OrderSummary findSummary(@Param("orderId") int orderId);
 
+  // Buscar todas las órdenes realizadas después de una fecha específica
+  @Query(value = """
+      SELECT
+        o
+      FROM
+        OrderEntity o
+      WHERE
+        o.date > :date
+        """)
+  List<OrderEntity> getAllPast(@Param("date") String date);
+
+  // Buscar órdenes de un cliente específico usando el nombre del cliente
+
+  @Query(value = """
+      SELECT
+          o
+      FROM
+          OrderEntity o INNER JOIN o.customer c
+      WHERE
+          c.name = :name
+      """)
+  List<OrderEntity> getAllByCustomer(@Param("name") String name);
 }

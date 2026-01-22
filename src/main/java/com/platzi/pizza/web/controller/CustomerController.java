@@ -1,5 +1,7 @@
 package com.platzi.pizza.web.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,5 +23,10 @@ public class CustomerController {
   @GetMapping("/{phone}")
   public ResponseEntity<CustomerEntity> getAll(@PathVariable String phone) {
     return new ResponseEntity<CustomerEntity>(this.customerService.findByPhone(phone), HttpStatus.OK);
+  }
+
+  @GetMapping("/srch/{text}")
+  public ResponseEntity<List<CustomerEntity>> findByText(@PathVariable String text) {
+    return ResponseEntity.ok(this.customerService.findByText(text));
   }
 }

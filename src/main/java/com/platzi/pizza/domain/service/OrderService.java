@@ -1,6 +1,8 @@
 package com.platzi.pizza.domain.service;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.List;
 
@@ -37,5 +39,13 @@ public class OrderService {
 
   public OrderSummary getSummary(int orderId) {
     return this.orderRepository.findSummary(orderId);
+  }
+
+  public List<OrderEntity> getAllPast(LocalDateTime date) {
+    return this.orderRepository.getAllPast(DateTimeFormatter.ofPattern("yyyy-MM-dd").format(date));
+  }
+
+  public List<OrderEntity> getAllByCustomer(String name) {
+    return this.orderRepository.getAllByCustomer(name);
   }
 }

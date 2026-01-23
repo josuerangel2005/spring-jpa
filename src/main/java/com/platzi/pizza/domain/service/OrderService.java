@@ -11,6 +11,7 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.platzi.pizza.domain.dto.RandomOrderDto;
 import com.platzi.pizza.persistence.entity.OrderEntity;
 import com.platzi.pizza.persistence.projection.OrderSummary;
 import com.platzi.pizza.persistence.projection.PaymentMethod;
@@ -60,5 +61,10 @@ public class OrderService {
 
   public List<PaymentMethod> getPayments() {
     return this.orderRepository.getPayments();
+  }
+
+  public Boolean saveRandomOrder(RandomOrderDto randomOrderDto) {
+    return this.orderRepository.saveRandomOrder(randomOrderDto.idCustomer(), randomOrderDto.method());
+
   }
 }

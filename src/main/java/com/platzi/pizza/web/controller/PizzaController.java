@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.platzi.pizza.domain.dto.UpdatePizzaPriceDto;
 import com.platzi.pizza.domain.service.PizzaService;
 import com.platzi.pizza.persistence.entity.PizzaEntity;
 
@@ -121,5 +122,14 @@ public class PizzaController {
       @RequestParam(defaultValue = "ASC") String direction) {
     return new ResponseEntity<Page<PizzaEntity>>(this.pizzaService.getAvailable(page, elements, sortBy, direction),
         HttpStatus.OK);
+  }
+
+  @PutMapping("/updatepr")
+  public ResponseEntity<Void> updatePrice(@RequestBody UpdatePizzaPriceDto updatePizzaPriceDto) {
+    if (!this.pizzaService.exists(updatePizzaPriceDto.pizzaId())) {
+      return ResponseEntity.badRequest().build();
+    }
+    this.pizzaService.updatePrice(updatePizzaPriceDto);
+    return ResponseEntity.ok().build();
   }
 }

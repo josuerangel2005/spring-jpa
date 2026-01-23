@@ -9,7 +9,11 @@ import org.springframework.data.domain.Sort;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
+import com.platzi.pizza.domain.dto.UpdatePizzaPriceDto;
+import com.platzi.pizza.domain.exception.EmailApiException;
 import com.platzi.pizza.persistence.entity.PizzaEntity;
 import com.platzi.pizza.persistence.repository.PizzaPagSortRepository;
 import com.platzi.pizza.persistence.repository.PizzaRepository;
@@ -96,5 +100,15 @@ public class PizzaService {
   public Page<PizzaEntity> getAvailable(int page, int elements, String sortBy, String direction) {
     return this.pizzaPagSortRepository
         .findAll(PageRequest.of(page, elements, Sort.by(Sort.Direction.fromString(direction), sortBy)));
+  }
+
+  @Transactional(noRollbackFor = EmailApiException.class, propagation = Propagation.REQUIRED)
+  public void updatePrice(UpdatePizzaPriceDto updatePizzaPriceDto) {
+    this.pizzaRepository.updatePrice(updatePizzaPriceDto);
+    this.sendEmail();
+  }
+
+  private void sendEmail() {
+    throw new EmailApiException();
   }
 }

@@ -24,4 +24,5 @@ public class PizzaSqlService {
   public Long countVegan() {
     return this.pizzaSqlRepository.countVegan();
   }
+
 }

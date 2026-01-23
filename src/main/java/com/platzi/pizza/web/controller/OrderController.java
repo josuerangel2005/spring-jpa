@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.platzi.pizza.domain.service.OrderService;
 import com.platzi.pizza.persistence.entity.OrderEntity;
 import com.platzi.pizza.persistence.projection.OrderSummary;
+import com.platzi.pizza.persistence.projection.PaymentMethod;
 
 @RestController
 @RequestMapping("/api/order")
@@ -56,5 +57,15 @@ public class OrderController {
   @GetMapping("/cusn")
   public ResponseEntity<List<OrderEntity>> getAllByCustomer(@RequestParam String name) {
     return ResponseEntity.ok(this.orderService.getAllByCustomer(name));
+  }
+
+  @GetMapping("/total")
+  public ResponseEntity<Double> getTotal() {
+    return ResponseEntity.ok(this.orderService.getTotal());
+  }
+
+  @GetMapping("/payments")
+  public ResponseEntity<List<PaymentMethod>> getPayments() {
+    return ResponseEntity.ok(this.orderService.getPayments());
   }
 }

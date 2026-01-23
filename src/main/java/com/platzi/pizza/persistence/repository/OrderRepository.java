@@ -9,6 +9,7 @@ import org.springframework.data.repository.query.Param;
 
 import com.platzi.pizza.persistence.entity.OrderEntity;
 import com.platzi.pizza.persistence.projection.OrderSummary;
+import com.platzi.pizza.persistence.projection.PaymentMethod;
 
 public interface OrderRepository extends ListCrudRepository<OrderEntity, Integer> {
   List<OrderEntity> findAllByDateAfter(LocalDateTime date);
@@ -52,7 +53,25 @@ public interface OrderRepository extends ListCrudRepository<OrderEntity, Integer
       FROM
           OrderEntity o INNER JOIN o.customer c
       WHERE
-          c.name = :name
+          LOWER(c.name) = :name
       """)
   List<OrderEntity> getAllByCustomer(@Param("name") String name);
+
+  @Query(value = """
+      SELECT
+          SUM(o.total)
+      FROM
+          OrderEntity o
+      """)
+  Double getTotal();
+
+  @Query(value = """
+      SELECT
+      	po.`method`,
+      	COUNT(po.id_order) As quantity
+      FROM
+      	pizza_order po
+      GROUP BY po.`method`;
+          """, nativeQuery = true)
+  List<PaymentMethod> getPayments();
 }

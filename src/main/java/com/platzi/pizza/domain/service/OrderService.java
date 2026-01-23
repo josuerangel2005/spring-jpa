@@ -4,13 +4,16 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.platzi.pizza.persistence.entity.OrderEntity;
 import com.platzi.pizza.persistence.projection.OrderSummary;
+import com.platzi.pizza.persistence.projection.PaymentMethod;
 import com.platzi.pizza.persistence.repository.OrderRepository;
 
 @Service
@@ -46,6 +49,16 @@ public class OrderService {
   }
 
   public List<OrderEntity> getAllByCustomer(String name) {
-    return this.orderRepository.getAllByCustomer(name);
+    System.out.println("\n" + name);
+    return this.orderRepository
+        .getAllByCustomer(Arrays.stream(name.toLowerCase().split("%20")).collect(Collectors.joining(" ")));
+  }
+
+  public Double getTotal() {
+    return this.orderRepository.getTotal();
+  }
+
+  public List<PaymentMethod> getPayments() {
+    return this.orderRepository.getPayments();
   }
 }

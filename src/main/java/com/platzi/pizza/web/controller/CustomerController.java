@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.platzi.pizza.domain.service.CustomerService;
 import com.platzi.pizza.persistence.entity.CustomerEntity;
+import com.platzi.pizza.persistence.projection.NameProjection;
+import com.platzi.pizza.persistence.projection.NameQuantity;
 
 @RestController
 @RequestMapping("/api/customer")
@@ -28,5 +30,15 @@ public class CustomerController {
   @GetMapping("/srch/{text}")
   public ResponseEntity<List<CustomerEntity>> findByText(@PathVariable String text) {
     return ResponseEntity.ok(this.customerService.findByText(text));
+  }
+
+  @GetMapping("/exp")
+  public ResponseEntity<NameProjection> getMostExpensive() {
+    return ResponseEntity.ok(this.customerService.mostExpensiveCustomer());
+  }
+
+  @GetMapping("/names")
+  public ResponseEntity<List<NameQuantity>> nameQuantities() {
+    return ResponseEntity.ok(this.customerService.nameQuantities());
   }
 }

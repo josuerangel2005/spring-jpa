@@ -17,6 +17,8 @@ import com.platzi.pizza.persistence.projection.OrderSummary;
 import com.platzi.pizza.persistence.projection.PaymentMethod;
 import com.platzi.pizza.persistence.repository.OrderRepository;
 
+import jakarta.transaction.Transactional;
+
 @Service
 public class OrderService {
   private static final String DELIVERY = "D";
@@ -63,6 +65,7 @@ public class OrderService {
     return this.orderRepository.getPayments();
   }
 
+  @Transactional
   public Boolean saveRandomOrder(RandomOrderDto randomOrderDto) {
     return this.orderRepository.saveRandomOrder(randomOrderDto.idCustomer(), randomOrderDto.method());
 
